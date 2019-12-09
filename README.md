@@ -1,5 +1,7 @@
 # projectOne
 
+Preview: https://lilspikey333.github.io/projectOne/
+
 "Medal Plans"
 
 ## Bronze
