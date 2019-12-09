@@ -2,20 +2,23 @@
 
 "Medal Plans"
 
-Bronze
-Plain styling
-10 randomly generated questions
-Clicking on the answer will determine if answer is correct
-Messages are displayed on screen
-Timer for each question
+## Bronze
 
-Silver
-Better CSS styling with possible bootstrap
-Modals that display messages when answer is correct or not
-Final score displayed
+1. Plain styling
+1. 10 randomly generated questions
+1. Clicking on the answer will determine if answer is correct
+1. Messages are displayed on screen
+1. Timer for each question
 
-Gold
-Hover button capabilities
-drop-down that allows user to select question categories
-Drop-down that enables different difficulties
-All messages to the user are displayed in modals
+## Silver
+
+1. Better CSS styling with possible bootstrap
+1. Modals that display messages when answer is correct or not
+1. Final score displayed
+
+## Gold
+
+1. Hover button capabilities
+1. Drop-down that allows user to select question categories
+1. Drop-down that enables different difficulties
+1. All messages to the user are displayed in modals
