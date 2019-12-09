@@ -1,3 +1,36 @@
 body {
-  background-color: pink;
+  background-color: rgb(36, 36, 65);
+  color: rgb(192, 188, 188);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.game-board {
+  display: grid;
+  height: 500px;
+  grid-template-rows: 1fr 2fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.question {
+  grid-column: 1/5;
+  grid-row: 1/2;
+  border: 3px solid white;
+  font-size: larger;
+  text-align: center;
+  padding: 15% 15px 15% 15px;
+  margin: 15px;
+}
+
+.answer {
+  grid-column: auto;
+  grid-row: 2/3;
+  border: 3px solid white;
+  font-size: large;
+  text-align: center;
+  padding: 20% 15px 20% 15px;
+  margin: 15px;
+}
+
+button {
+  position: absolute;
+  bottom: 50px;
 }
