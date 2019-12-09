@@ -2,9 +2,9 @@
 
 Preview: https://lilspikey333.github.io/projectOne/
 
-"Medal Plans"
+## "Medal Plans"
 
-## Bronze
+### Bronze
 
 1. Plain styling
 1. 10 randomly generated questions
@@ -12,13 +12,13 @@ Preview: https://lilspikey333.github.io/projectOne/
 1. Messages are displayed on screen
 1. Timer for each question
 
-## Silver
+### Silver
 
 1. Better CSS styling with possible bootstrap
 1. Modals that display messages when answer is correct or not
 1. Final score displayed
 
-## Gold
+### Gold
 
 1. Hover button capabilities
 1. Drop-down that allows user to select question categories
