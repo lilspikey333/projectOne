@@ -1,8 +1,8 @@
-let correctAnswer = document.querySelector(".correct-answer");
 const gameBoard = document.querySelector(".game-board");
-const searchBtn = document.querySelector("#start-button");
+let time = document.querySelector(".timer");
 let url = "https://opentdb.com/api.php?amount=10";
-let answerOption;
+let answerOptions;
+
 // get that timer number from the DOM
 
 // this is going to get the questions and answers
@@ -10,32 +10,58 @@ let fetchData = () => {
   fetch(url)
     .then(res => res.json())
     .then(res => {
-      console.log(res);
-      let data = res;
+      let data = res.results;
+      console.log(data);
       createQuestion(data);
+      timer();
       // Put res data into a variable
       // put in function that takes in res and does stuff with it => createQuestion()
       // start your timer => call timer function
     });
 };
+fetchData();
+
+let round = 0;
 let createQuestion = data => {
-  let question = document.querySelector(".question");
-  question.textContent = data.results[0].question;
-  correctAnswer.textContent = data.results[0].correct_answer;
+  for (let i = round; i < data.length; i++) {
+    // Build question
+    let question = document.createElement("div");
+    question.classList.add("question");
+    console.log(question);
+    question.textContent = `${data[i].question}`;
+    gameBoard.appendChild(question);
+    // Build correct answer
+    let correctAnswer = document.createElement("div");
+    correctAnswer.classList.add("correct-answer", "answer");
+    correctAnswer.textContent = `${data[i].correct_answer}`;
+    gameBoard.appendChild(correctAnswer);
+    // Build incorrect answers
+    data[i].incorrect_answers.forEach(answer => {
+      let answerDiv = document.createElement("div");
+      answerDiv.classList.add("wrong-answer", "answer");
+      gameBoard.appendChild(answerDiv);
+      answerDiv.textContent = answer;
+    });
+    let answerOptions = [];
+    answerOptions = document.querySelectorAll(".answer");
+    console.log(answerOptions); // this is a nodeList! cant loop over them
+    answerOptions.forEach(answer => {
+      answer.addEventListener("click", verifyAnswer);
+    });
+  }
+};
 
-  data.results[0].incorrect_answers.forEach(answer => {
-    let answerDiv = document.createElement("div");
-    answerDiv.classList.add("wrong-answer", "answer");
-    gameBoard.appendChild(answerDiv);
-    answerDiv.textContent = answer;
-  });
-
-  answerOption = document.querySelectorAll(".answer");
-  console.log(answerOption); // this is a nodeList! cant loop over them
-
-  answerOption.forEach(answer => {
-    answer.addEventListener("click", verifyAnswer);
-  });
+let counter = 10;
+let timer = () => {
+  setInterval(() => {
+    counter--;
+    if (counter <= 0) {
+      // createQuestion(round + 1);
+      clearInterval(timer);
+    } else {
+      time.textContent = `${counter} sec`;
+    }
+  }, 1000);
 };
 
 // timer function
@@ -65,8 +91,6 @@ let verifyAnswer = e => {
     alert("Congrats! That was correct!");
   }
 };
-
-searchBtn.addEventListener("click", fetchData);
 
 /*Next step is to add event listener to the answer divs and have 
 it cycle through the results array each time it's clicked */
