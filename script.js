@@ -1,4 +1,4 @@
-const gameBoard = document.querySelector(".game-board");
+let gameBoard = document.querySelector(".game-board");
 let time = document.querySelector(".timer");
 let url = "https://opentdb.com/api.php?amount=10";
 let answerOptions;
@@ -11,7 +11,7 @@ let fetchData = () => {
     .then(res => res.json())
     .then(res => {
       let data = res.results;
-      console.log(data);
+      console.log(data.length);
       createQuestion(data);
       timer();
       // Put res data into a variable
@@ -23,31 +23,46 @@ fetchData();
 
 let round = 0;
 let createQuestion = data => {
-  for (let i = round; i < data.length; i++) {
+  console.log(data);
+  if (!document.querySelector(".question")) {
     // Build question
     let question = document.createElement("div");
     question.classList.add("question");
     console.log(question);
-    question.textContent = `${data[i].question}`;
+    question.textContent = `${data[0].question}`;
     gameBoard.appendChild(question);
     // Build correct answer
     let correctAnswer = document.createElement("div");
     correctAnswer.classList.add("correct-answer", "answer");
-    correctAnswer.textContent = `${data[i].correct_answer}`;
+    correctAnswer.textContent = `${data[0].correct_answer}`;
     gameBoard.appendChild(correctAnswer);
     // Build incorrect answers
-    data[i].incorrect_answers.forEach(answer => {
+    data[0].incorrect_answers.forEach(answer => {
       let answerDiv = document.createElement("div");
       answerDiv.classList.add("wrong-answer", "answer");
       gameBoard.appendChild(answerDiv);
       answerDiv.textContent = answer;
     });
+    let verifyAnswer = e => {
+      selectedDiv = e.target;
+      console.log(selectedDiv);
+      if (selectedDiv.classList.contains("wrong-answer")) {
+        alert("Sorry - That was not the right answer");
+      } else if (selectedDiv.classList.contains("correct-answer")) {
+        alert("Congrats! That was correct!");
+      }
+      gameBoard.innerHTML = "";
+      createQuestion(data);
+    };
     let answerOptions = [];
     answerOptions = document.querySelectorAll(".answer");
+    // Math.random to get a random number to grab from the array (index stays the same)
     console.log(answerOptions); // this is a nodeList! cant loop over them
     answerOptions.forEach(answer => {
       answer.addEventListener("click", verifyAnswer);
     });
+    data.shift();
+    console.log(data);
   }
 };
 
@@ -82,15 +97,7 @@ let timer = () => {
 
 // Math.random for randomizer of divs - separate function
 
-let verifyAnswer = e => {
-  selectedDiv = e.target;
-  console.log(selectedDiv);
-  if (selectedDiv.classList.contains("wrong-answer")) {
-    alert("Sorry - That was not the right answer");
-  } else if (selectedDiv.classList.contains("correct-answer")) {
-    alert("Congrats! That was correct!");
-  }
-};
+// }; unshift the first item from the data array
 
 /*Next step is to add event listener to the answer divs and have 
 it cycle through the results array each time it's clicked */
