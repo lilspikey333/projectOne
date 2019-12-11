@@ -4,6 +4,8 @@ let scoreDisplay = document.querySelector("#score");
 let url = "https://opentdb.com/api.php?amount=10";
 let answerOptions;
 let score = 0;
+let counter = 10;
+
 // get that timer number from the DOM
 
 let fetchData = () => {
@@ -12,13 +14,14 @@ let fetchData = () => {
     .then(res => {
       let data = res.results;
       createQuestion(data);
+      timer();
+      return data;
     });
 };
 fetchData();
 
 let createQuestion = data => {
   if (!document.querySelector(".question")) {
-    timer();
     // Build question
     let combinedAnswers = [];
     let question = document.createElement("div");
@@ -43,13 +46,14 @@ let createQuestion = data => {
       selectedDiv = e.target;
       if (selectedDiv.classList.contains("wrong-answer")) {
         alert("Sorry - That was not the right answer");
+        counter = 11;
       } else if (selectedDiv.classList.contains("correct-answer")) {
         alert("Congrats! That was correct!");
         score = score + 1;
+        counter = 11;
       }
       scoreDisplay.innerHTML = `${score}/10`;
       gameBoard.innerHTML = "";
-      time.textContent = `${counter} sec`;
       createQuestion(data);
     };
     /* After struggling for 6 hours to try and figure out how to randomize my array to append my 
@@ -74,35 +78,21 @@ let createQuestion = data => {
       gameBoard.appendChild(answer);
       answer.addEventListener("click", verifyAnswer);
     });
+    return data;
   }
 };
-
-let counter = 10;
 let timer = () => {
   setInterval(() => {
     counter--;
-    if (counter <= 0) {
+    if (counter < 0) {
       clearInterval(timer);
+      alert(`Time's Up! Next Question!`);
+      counter = 11;
+      createQuestion(data);
     } else {
-      time.textContent = `${counter} sec`;
+      time.innerHTML = `${counter} sec`;
     }
   }, 1000);
 };
 
-// timer function
-// setTimeout(()=>{
-// reverse for loop?
-// .innerHTML set to i
-// }, 1000)
-// if timer runs out=> call createQuestion +1
 
-// createQuestion() =>  create divs for: question;
-// declare dummy variables
-// let something = document.createElement('div').classList.add(`res.correct_answer`)
-// let something = document.createElement('div').classList.add(`res.incorrect_answer`)
-// .textContent(answer.results[0])
-// answers. save these in a variables
-// put them into an array, to randomize them
-// append
-
-// Math.random for randomizer of divs - separate function
