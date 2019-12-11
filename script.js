@@ -1,68 +1,79 @@
 let gameBoard = document.querySelector(".game-board");
 let time = document.querySelector(".timer");
+let scoreDisplay = document.querySelector("#score");
 let url = "https://opentdb.com/api.php?amount=10";
 let answerOptions;
-
+let score = 0;
 // get that timer number from the DOM
 
-// this is going to get the questions and answers
 let fetchData = () => {
   fetch(url)
     .then(res => res.json())
     .then(res => {
       let data = res.results;
-      console.log(data.length);
       createQuestion(data);
-      timer();
-      // Put res data into a variable
-      // put in function that takes in res and does stuff with it => createQuestion()
-      // start your timer => call timer function
     });
 };
 fetchData();
 
-let round = 0;
 let createQuestion = data => {
-  console.log(data);
   if (!document.querySelector(".question")) {
+    timer();
     // Build question
+    let combinedAnswers = [];
     let question = document.createElement("div");
     question.classList.add("question");
-    console.log(question);
-    question.textContent = `${data[0].question}`;
+    question.innerHTML = `${data[0].question}`;
     gameBoard.appendChild(question);
     // Build correct answer
     let correctAnswer = document.createElement("div");
     correctAnswer.classList.add("correct-answer", "answer");
-    correctAnswer.textContent = `${data[0].correct_answer}`;
-    gameBoard.appendChild(correctAnswer);
+    correctAnswer.innerHTML = `${data[0].correct_answer}`;
+    combinedAnswers.push(correctAnswer);
     // Build incorrect answers
     data[0].incorrect_answers.forEach(answer => {
-      let answerDiv = document.createElement("div");
-      answerDiv.classList.add("wrong-answer", "answer");
-      gameBoard.appendChild(answerDiv);
-      answerDiv.textContent = answer;
+      let wrongAnswer = document.createElement("div");
+      wrongAnswer.classList.add("wrong-answer", "answer");
+      wrongAnswer.innerHTML = answer;
+      combinedAnswers.push(wrongAnswer);
     });
+    data.shift(); // Remove the first item from the data array so that the new data[0] is the next in line
+
     let verifyAnswer = e => {
       selectedDiv = e.target;
-      console.log(selectedDiv);
       if (selectedDiv.classList.contains("wrong-answer")) {
         alert("Sorry - That was not the right answer");
       } else if (selectedDiv.classList.contains("correct-answer")) {
         alert("Congrats! That was correct!");
+        score = score + 1;
       }
+      scoreDisplay.innerHTML = `${score}/10`;
       gameBoard.innerHTML = "";
+      time.textContent = `${counter} sec`;
       createQuestion(data);
     };
-    let answerOptions = [];
-    answerOptions = document.querySelectorAll(".answer");
-    // Math.random to get a random number to grab from the array (index stays the same)
-    console.log(answerOptions); // this is a nodeList! cant loop over them
-    answerOptions.forEach(answer => {
+    /* After struggling for 6 hours to try and figure out how to randomize my array to append my 
+    amnswer HTML elements in a random way, Joe gave me the following link to get the proper code 
+    snippet from: https://git.generalassemb.ly/wdi-nyc-algorithms/whiteboarding-meetup/blob/master/algorithms.md#randomize-an-array
+    I have studied it though and understand now that it is  */
+    let randomizeAnswers = array => {
+      let len = array.length;
+      let last;
+      let random;
+      while (len) {
+        random = Math.floor(Math.random() * (len -= 1));
+        last = array[len];
+        array[len] = array[random];
+        array[random] = last;
+
+        return array;
+      }
+    };
+    randomizeAnswers(combinedAnswers);
+    combinedAnswers.forEach(answer => {
+      gameBoard.appendChild(answer);
       answer.addEventListener("click", verifyAnswer);
     });
-    data.shift();
-    console.log(data);
   }
 };
 
@@ -71,7 +82,6 @@ let timer = () => {
   setInterval(() => {
     counter--;
     if (counter <= 0) {
-      // createQuestion(round + 1);
       clearInterval(timer);
     } else {
       time.textContent = `${counter} sec`;
@@ -96,8 +106,3 @@ let timer = () => {
 // append
 
 // Math.random for randomizer of divs - separate function
-
-// }; unshift the first item from the data array
-
-/*Next step is to add event listener to the answer divs and have 
-it cycle through the results array each time it's clicked */
