@@ -14,13 +14,28 @@ let fetchData = () => {
     .then(res => {
       let data = res.results;
       createQuestion(data);
-      timer();
-      return data;
     });
 };
 fetchData();
 
 let createQuestion = data => {
+  let t;
+  let timer = () => {
+    t = setInterval(() => {
+      counter--;
+      if (counter < 0) {
+        clearInterval(t);
+        gameBoard.innerHTML = "";
+        createQuestion(data);
+        alert(`Time's Up! Next Question!`);
+        counter = 11;
+      } else {
+        time.innerHTML = `${counter} sec`;
+      }
+    }, 1000);
+  };
+
+  timer();
   if (!document.querySelector(".question")) {
     // Build question
     let combinedAnswers = [];
@@ -46,10 +61,12 @@ let createQuestion = data => {
       selectedDiv = e.target;
       if (selectedDiv.classList.contains("wrong-answer")) {
         alert("Sorry - That was not the right answer");
+        clearInterval(t);
         counter = 11;
       } else if (selectedDiv.classList.contains("correct-answer")) {
         alert("Congrats! That was correct!");
         score = score + 1;
+        clearInterval(t);
         counter = 11;
       }
       scoreDisplay.innerHTML = `${score}/10`;
@@ -78,21 +95,9 @@ let createQuestion = data => {
       gameBoard.appendChild(answer);
       answer.addEventListener("click", verifyAnswer);
     });
-    return data;
   }
 };
-let timer = () => {
-  setInterval(() => {
-    counter--;
-    if (counter < 0) {
-      clearInterval(timer);
-      alert(`Time's Up! Next Question!`);
-      counter = 11;
-      createQuestion(data);
-    } else {
-      time.innerHTML = `${counter} sec`;
-    }
-  }, 1000);
-};
 
-
+let resetGame = () => {
+  
+}
