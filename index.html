@@ -15,26 +15,38 @@
     <title>Document</title>
   </head>
   <body>
-    <h1>Welcome to Trivia Mania!!!</h1>
+    <h1 class="title">Welcome to Trivia Mania!</h1>
     <div id="modal">
-      <div id="modal-text">
+      <div class="modal-text">
         <h2 id="modal-header">Ready to play some Trivia?</h2>
         <p>
           Select the option that you think is the answer to each question. You
           will have 10 seconds to answer each question and there are 10
           questions total. Good Luck!
         </p>
-        <div id="modal-footer">
-          <button id="modal-button">Start New Game</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success modal-button">Start New Game</button>
         </div>
       </div>
     </div>
-    <div class="timer">10 sec</div>
-    <div class="game-board"></div>
-    <section class="score-board">
-      <h2 id="score-header">Your Running Score</h2>
-      <p id="score">0/10</p>
-    </section>
+    <div id="results-modal">
+      <div class="modal-text">
+        <p>
+
+        </p>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success results-button">Next Question!</button>
+          </div>
+      </div>
+    </div>
+    <div class="card text-center">
+      <div class="timer card-header">10 sec</div>
+      <div class="game-board card-body"></div>
+      <section class="score-board card-footer text-muted">
+        <h2 id="score-header">Your Running Score</h2>
+        <p id="score">0/10</p>
+      </section>
+    </div>
   </body>
   <script src="script.js"></script>
 </html>
