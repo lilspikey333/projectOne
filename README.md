@@ -81,10 +81,10 @@ I utilized the newest version of Bootstrap for my styling of this Trivia game.
 Looking at my initial plan, I ended up being halfway through with completing my Gold - I'm very happy with that!!!
 If I had the time to refactor (and deal with the inevitable bugs along the way), I would expand on the following:
 
-    - I really wanted to get those drop-downs created and working to allow the user to choose their quiz questions better. Honestly, I will probably do this soon anyway because I think the user experience will be much better
+- I really wanted to get those drop-downs created and working to allow the user to choose their quiz questions better. Honestly, I will probably do this soon anyway because I think the user experience will be much better
 
-    -  Although I focused on mobile functionality primarily (where my users will most likely be), I think I could have improved the responsiveness with media queries.  I don't love the desktop version of my game and see possible improvements there
+- Although I focused on mobile functionality primarily (where my users will most likely be), I think I could have improved the responsiveness with media queries. I don't love the desktop version of my game and see possible improvements there
 
-    - As I mentioned above, I'm not too happy that everything had to be in one major function because of the nature of the API data.  It would take me a while to see if that is even possible to refactor, but it's something that I would try at least.
+- As I mentioned above, I'm not too happy that everything had to be in one major function because of the nature of the API data. It would take me a while to see if that is even possible to refactor, but it's something that I would try at least.
 
-    - I think I have interacting with the DOM and changing DOM element properties in javascript down, but I would like to get better at transferring those DOM elements to JS objects and properties instead.  I think this program could be improved in that way.
+- I think I have interacting with the DOM and changing DOM element properties in javascript down, but I would like to get better at transferring those DOM elements to JS objects and properties instead. I think this program could be improved in that way.
